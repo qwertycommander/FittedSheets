@@ -45,7 +45,7 @@ open class SheetViewController: UIViewController {
         }
     }
     
-    private var firstPanPoint: CGPoint = CGPoint.zero
+    public var firstPanPoint: CGPoint = CGPoint.zero
     
     /// If true, the child view controller will be inset to account for the bottom safe area. This must be set before the sheet view controller loads for it to function properly
     public var adjustForBottomSafeArea: Bool = false
@@ -81,7 +81,7 @@ open class SheetViewController: UIViewController {
     /// The array of sizes we are trying to pin to when resizing the sheet. To set, use `setSizes` function
     private var orderedSheetSizes: [SheetSize] = [.fixed(300), .fullScreen]
     
-    private var panGestureRecognizer: InitialTouchPanGestureRecognizer!
+    public var panGestureRecognizer: InitialTouchPanGestureRecognizer!
     /// The child view controller's scroll view we are watching so we can override the pull down/up to work on the sheet when needed
     private weak var childScrollView: UIScrollView?
     
