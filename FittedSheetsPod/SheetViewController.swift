@@ -20,7 +20,7 @@ public protocol SheetViewControllerDelegate : class {
 open class SheetViewController: UIViewController {
     
     
-    weak var delegate: SheetViewControllerDelegate?
+    public weak var delegate: SheetViewControllerDelegate?
 
     
     // MARK: - Public Properties
@@ -362,6 +362,7 @@ open class SheetViewController: UIViewController {
         }
         
         if gesture.state == .cancelled || gesture.state == .failed {
+            self.delegate?.changedSize(sheetVC: self, sheetSize: self.containerSize)
             UIView.animate(withDuration: 0.3, delay: 0, options: [.curveEaseOut], animations: {
                 self.containerView.transform = CGAffineTransform.identity
                 self.containerHeightConstraint.constant = self.height(for: self.containerSize)
