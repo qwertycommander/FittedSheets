@@ -8,7 +8,21 @@
 
 import UIKit
 
+
+
+public protocol SheetViewControllerDelegate : class {
+    
+    func changedSize(sheetVC: SheetViewController, sheetSize: SheetSize) -> Void
+
+}
+
+
 open class SheetViewController: UIViewController {
+    
+    
+    weak var delegate: SheetViewControllerDelegate?
+
+    
     // MARK: - Public Properties
     public private(set) var childViewController: UIViewController!
     
@@ -72,7 +86,6 @@ open class SheetViewController: UIViewController {
     
     public var willDismiss: ((SheetViewController) -> Void)?
     public var didDismiss: ((SheetViewController) -> Void)?
-    public var changedSize: ((SheetViewController, SheetSize) -> Void)?
     
     // MARK: - Private properties
     /// The current preferred container size
@@ -176,7 +189,7 @@ open class SheetViewController: UIViewController {
             self.containerHeightConstraint?.constant = self.height(for: size)
         }
         self.containerSize = size
-        self.changedSize?(self, self.containerSize)
+        delegate?.changedSize(sheetVC: self, sheetSize: self.containerSize)
         self.actualContainerSize = size
     }
     
@@ -397,8 +410,8 @@ open class SheetViewController: UIViewController {
                 }
             }
             self.containerSize = newSize
-            self.changedSize?(self, self.containerSize)
-            
+            delegate?.changedSize(sheetVC: self, sheetSize: self.containerSize)
+
             UIView.animate(withDuration: animationDuration, delay: 0, options: [.curveEaseOut], animations: {
                 self.containerView.transform = CGAffineTransform.identity
                 self.containerHeightConstraint.constant = self.height(for: newSize)
